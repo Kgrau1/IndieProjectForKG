@@ -18,7 +18,7 @@ public class ChangeJobServlet extends HttpServlet {
         //DAO call
 
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("changeJobConfirmation.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
 }

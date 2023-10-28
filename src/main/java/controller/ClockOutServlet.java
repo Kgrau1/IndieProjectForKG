@@ -18,7 +18,7 @@ public class ClockOutServlet extends HttpServlet {
         //DAO call
 
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("clockOutConfirmation.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
 }

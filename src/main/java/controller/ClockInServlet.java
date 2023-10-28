@@ -18,7 +18,7 @@ public class ClockInServlet extends HttpServlet {
         //DAO call
 
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("clockInConfirmation.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
 }
