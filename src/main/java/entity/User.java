@@ -1,5 +1,7 @@
 package entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.ArrayList;
 import javax.persistence.*;
 import java.util.*;
@@ -7,12 +9,19 @@ import java.util.*;
 /**
  * The type User.
  */
+@Entity(name = "User")
+@Table(name = "Users")
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private boolean isClockedIn;
+    @OneToMany(mappedBy = "Users", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Hours> loggedHours;
 
     /**
@@ -119,5 +128,16 @@ public class User {
      */
     public void setLoggedHours(List<Hours> loggedHours) {
         this.loggedHours = loggedHours;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isClockedIn=" + isClockedIn +
+                ", loggedHours=" + loggedHours +
+                '}';
     }
 }
