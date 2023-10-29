@@ -14,6 +14,7 @@
 <body>
     <form action="ClockingActionsServlet" method="post">
         <label>User ID: ${param.userId}</label>
+        <!-- Add first and last name -->
         <label>Enter Job: </label>
         <input type="text" name="jobId" value="jobId">
 

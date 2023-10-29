@@ -1,5 +1,6 @@
 package controller;
 
+import entity.User;
 import persistence.GenericDao;
 
 import javax.servlet.*;
@@ -16,7 +17,7 @@ public class ClockInStatusServlet extends HttpServlet {
 
         int userId = Integer.parseInt(request.getParameter("userId"));
 
-        GenericDao dao = new GenericDao();
+        GenericDao<User> dao = new GenericDao<>(User.class);
         boolean isClockedIn = dao.getClockedInStatus(userId);
 
         request.setAttribute("isClockedIn", isClockedIn);
