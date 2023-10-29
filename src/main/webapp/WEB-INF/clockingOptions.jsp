@@ -13,8 +13,9 @@
 </head>
 <body>
     <form action="ClockingActionsServlet" method="post">
-        <label>User ID: </label>
-        <input type="text" name="userId" value="${param.userId}">
+        <label>User ID: ${param.userId}</label>
+        <label>Enter Job: </label>
+        <input type="text" name="jobId" value="jobId">
 
         <c:choose>
             <c:when test="${isClockedIn}">
