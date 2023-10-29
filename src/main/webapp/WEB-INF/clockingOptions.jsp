@@ -19,11 +19,11 @@
 
         <c:choose>
             <c:when test="${isClockedIn}">
-                <input type="submit" name="action" value="Change Job">
-                <input type="submit" name="action" value="Clock Out">
+                <button type="submit" name="action" value="Change Job">
+                <button type="submit" name="action" value="Clock Out">
             </c:when>
             <c:otherwise>
-                <input type="submit" name="action" value="Clock In">
+                <button type="submit" name="action" value="Clock In">
             </c:otherwise>
         </c:choose>
     </form>
