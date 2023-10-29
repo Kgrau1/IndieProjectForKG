@@ -19,12 +19,23 @@ public class GenericDao<T> {
     private Class<T> type;
     private final Logger logger = LogManager.getLogger(this.getClass());
 
+    public GenericDao(Class<T> type) {
+        this.type = type;
+    }
+
     public GenericDao() {
 
     }
 
     public Session getSession() {
         return SessionFactoryProvider.getSessionFactory().openSession();
+    }
+
+    public boolean getClockedInStatus(int id) {
+        Session session = getSession();
+        User entity = (User)session.get(type, id);
+        session.close();
+        return entity != null && entity.isClockedIn();
     }
 
     /**
@@ -57,7 +68,6 @@ public class GenericDao<T> {
      */
     public List<T> getAll() {
         Session session = getSession();
-
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         CriteriaQuery<T> query = builder.createQuery(type);
@@ -65,6 +75,5 @@ public class GenericDao<T> {
         List<T> list = session.createQuery(query).getResultList();
         session.close();
         return list;
-
     }
 }
