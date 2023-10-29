@@ -1,34 +1,68 @@
 package persistence;
 
+import entity.Hours;
+import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-public class GenericDao {
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.*;
+import static persistence.SessionFactoryProvider.sessionFactory;
 
+public class GenericDao<T> {
+
+    private Class<T> type;
     private final Logger logger = LogManager.getLogger(this.getClass());
-
-    SessionFactory sessionFactory = SessionFactoryProvider.getSessionFactory();
 
     public GenericDao() {
 
     }
 
-    public User getById(int id) {
-        Session session = sessionFactory.openSession();
-        User user = session.get( User.class, id );
-        session.close();
-        return user;
+    public Session getSession() {
+        return SessionFactoryProvider.getSessionFactory().openSession();
     }
 
-    public List<> getAll() {
+    /**
+     * Gets an entity by id.
+     * @param id entity id to search by
+     * @return the entity
+     */
+    public <T>T getById(int id) {
+        Session session = getSession();
+        T entity = (T)session.get(type, id);
+        session.close();
+        return entity;
+    }
+
+    /**
+     * Delete the entity.
+     * @param entity the entity to be deleted
+     */
+    public void delete(T entity) {
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(entity);
+        transaction.commit();
+        session.close();
+    }
+
+    /**
+     * Gets all entities.
+     * @return all entities
+     */
+    public List<T> getAll() {
         Session session = getSession();
 
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
-        CriteriaQuery<> query = builder.createQuery(type);
-        Root<> root = query.from();
-        List<> list = session.createQuery(query).getResultList();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        List<T> list = session.createQuery(query).getResultList();
         session.close();
         return list;
 
