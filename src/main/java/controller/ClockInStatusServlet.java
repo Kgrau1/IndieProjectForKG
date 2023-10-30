@@ -21,6 +21,7 @@ public class ClockInStatusServlet extends HttpServlet {
         boolean isClockedIn = dao.getClockedInStatus(userId);
 
         request.setAttribute("isClockedIn", isClockedIn);
+        request.setAttribute("userId", userId);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("clockingOptions.jsp");
         dispatcher.forward(request, response);

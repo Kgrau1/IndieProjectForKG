@@ -2,6 +2,7 @@ package entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.persistence.*;
 import java.util.*;
@@ -20,8 +21,10 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    private LocalDateTime currentTime;
+
     private boolean isClockedIn;
-    @OneToMany(mappedBy = "Users", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Hours> loggedHours;
 
     /**
@@ -128,6 +131,24 @@ public class User {
      */
     public void setLoggedHours(List<Hours> loggedHours) {
         this.loggedHours = loggedHours;
+    }
+
+    /**
+     * Gets current time.
+     *
+     * @return the current time
+     */
+    public LocalDateTime getCurrentTime() {
+        return currentTime;
+    }
+
+    /**
+     * Sets current time.
+     *
+     * @param currentTime the current time
+     */
+    public void setCurrentTime(LocalDateTime currentTime) {
+        this.currentTime = currentTime;
     }
 
     @Override

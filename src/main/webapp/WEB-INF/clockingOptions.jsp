@@ -13,7 +13,8 @@
 </head>
 <body>
     <form action="ClockingActionsServlet" method="post">
-        <label>User ID: ${param.userId}</label>
+        <label>User ID: ${userId.userId}</label>
+        <input type="hidden" name="userId" value="${userId.userId}">
         <!-- Add first and last name -->
         <label>Enter Job: </label>
         <input type="text" name="jobId" value="jobId">

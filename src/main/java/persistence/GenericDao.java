@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.*;
 import static persistence.SessionFactoryProvider.sessionFactory;
 
@@ -50,6 +51,25 @@ public class GenericDao<T> {
         return entity;
     }
 
+    /**
+     * Clock in.
+     *
+     * @param hours the hours
+     */
+    public void clockIn(Hours hours) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        hours.setClockInTime(currentTime);
+    }
+
+    /**
+     * Clock out.
+     *
+     * @param hours the hours
+     */
+    public void clockOut(Hours hours) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        hours.setClockOutTime(currentTime);
+    }
     /**
      * Delete the entity.
      * @param entity the entity to be deleted
