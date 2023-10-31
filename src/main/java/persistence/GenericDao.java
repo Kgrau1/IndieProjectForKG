@@ -70,6 +70,19 @@ public class GenericDao<T> {
         LocalDateTime currentTime = LocalDateTime.now();
         hours.setClockOutTime(currentTime);
     }
+
+    /**
+     * Save or update.
+     *
+     * @param entity the entity
+     */
+    public void saveOrUpdate(T entity) {
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        session.saveOrUpdate(entity);
+        transaction.commit();
+        session.close();
+    }
     /**
      * Delete the entity.
      * @param entity the entity to be deleted

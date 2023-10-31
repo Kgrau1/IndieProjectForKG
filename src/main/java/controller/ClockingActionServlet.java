@@ -21,16 +21,20 @@ public class ClockingActionServlet {
         String jobId = request.getParameter("jobId");
         String action = request.getParameter("action");
         GenericDao<User> dao = new GenericDao<>(User.class);
+        User user = dao.getById(Integer.parseInt(userId));
         Hours hours = new Hours();
 
         if ("Clock In".equals(action)) {
-            User user = dao.getById(Integer.parseInt(userId));
             user.setClockedIn(true);
             dao.clockIn(hours);
             user.getLoggedHours().add(hours);
         } else if ("Clock out".equals(action)) {
-
+            user.setClockedIn(false);
+            dao.clockOut(hours);
+            user.getLoggedHours().add(hours);
+            dao.saveOrUpdate(user);
         } else if ("Change job".equals(action)) {
+            user.setClockedIn(false);
 
         }
 
