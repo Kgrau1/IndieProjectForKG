@@ -1,0 +1,62 @@
+
+Problem Statement:
+A timeclock app is needed to track the working hours of employees. The current manual process is time-consuming and error prone. The employer requires an automated solution to record clock-in and clock-out times, calculate total hours worked, and generate reports for payroll.
+
+User Stories:
+1. As an administrator, I want to be able to add new employees to the system.
+2. As an administrator, I want to be able to edit employee details.
+3. As an administrator, I want to be able to deactivate or reactivate employees as needed.
+4. As an employee, I want to be able to clock in and clock out using the app.
+5. As an employee, I want to view my own clock-in and clock-out history.
+6. As an employee, I want to be able to view my total hours worked for a specific date range.
+7. As an employee, I want to be able to change my current job.
+8. As an administrator, I want to be able to view the clock-in and clock-out history for all employees.
+9. As an administrator, I want to generate payroll reports based on the total hours worked.
+10. As an administrator, I want to generate total hours for a specific job.
+
+Project Plan:
+1. Requirements Gathering
+   - Define requirements based on problem statement and user stories.
+   - Create wireframes/mockups for the user interface.
+
+2. Database Design and Setup
+   - Design the database schema.
+   - Implement the database using MySQL.
+
+3. Backend Development
+   - Set up the environment.
+   - Implement user authentication and authorization.
+   - Create endpoints for user and clock-in/out management.
+
+4. Frontend Development
+   - Develop the user interface.
+   - Integrate the frontend with the backend.
+
+5. Testing and Quality Assurance
+   - Perform unit testing.
+
+6. Deployment and Hosting
+   - Set up hosting environment.
+   - Deploy the application for testing and user acceptance.
+
+7. Go-Live and Support
+   - Deploy the application to production.
+
+Screen Design:
+1. Login Screen:
+   - Fields: Username, Password, Login button.
+
+2. Dashboard:
+   - Display clock-in/out status for the current user.
+   - Option to clock in/out/change job.
+
+3. Employee Management:
+   - List of employees with options to add, edit, deactivate/reactivate.
+
+4. Clock-In/Out History:
+   - Display a table with date, clock-in time, clock-out time, job.
+
+5. Reports:
+   - Options to select date range and generate payroll reports.
+
+
