@@ -7,10 +7,19 @@
 </head>
 <body>
     <!-- Add EL to show conformation -->
-    <form action="ClockInStatusServlet" method="post">
+    <form action="ClockInStatusServlet" method="get">
         <label>User ID: </label>
-        <input type="text" name="userId">
+        <input type="number" name="userId">
         <button type="submit" value="submit">Submit</button>
+
+        <br>
+
+        <c:if test="${param.success eq 'true'}">
+            <p style="color: green;">Successfully clocked in</p>
+        </c:if>
+        <c:if test="${userNotFound}">
+            <p style="color: red;">User not found</p>
+        </c:if>
     </form>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package persistance;
 
-import entity.Hours;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,14 +8,12 @@ import org.junit.jupiter.api.Test;
 import persistence.Database;
 import persistence.GenericDao;
 
-import javax.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
-public class GenericDaoTest {
+public class GenericDaoUserTest {
 
     GenericDao dao;
-    private static final Logger logger = LogManager.getLogger(GenericDaoTest.class);
+    private static final Logger logger = LogManager.getLogger(GenericDaoUserTest.class);
 
     @BeforeEach
     void setUp() {
@@ -26,7 +23,7 @@ public class GenericDaoTest {
     }
 
     @Test
-    void getByIdSuccess() {
+    void getUserByIdSuccess() {
         logger.info("Running getByIdSuccess test");
         User retrievedUser = (User) dao.getById(1);
         assertNotNull(retrievedUser);
@@ -35,25 +32,25 @@ public class GenericDaoTest {
     }
 
     @Test
-    void getAllSuccess() {
+    void getAllUsersSuccess() {
         List<User> users = dao.getAll();
         assertEquals(2, users.size());
     }
 
     @Test
-    void insertSuccess() {
+    void insertUserSuccess() {
         User newUser = new User(3, "Jane", "Doe", false);
         int id = dao.insert(newUser);
         assertNotEquals(0, id);
 
-        User insertedUser = (User) dao.getById(id);
+        User insertedUser = (User) dao.getById(Integer.parseInt(String.valueOf(id)));
         assertNotNull(insertedUser);
         assertEquals("Jane", insertedUser.getFirstName());
         assertEquals("Doe", insertedUser.getLastName());
     }
 
     @Test
-    void updateSuccess() {
+    void updateUserSuccess() {
         User userToUpdate = (User) dao.getById(1);
         userToUpdate.setFirstName("K");
         dao.saveOrUpdate(userToUpdate);
@@ -64,7 +61,7 @@ public class GenericDaoTest {
     }
 
     @Test
-    void deleteSuccess() {
+    void deleteUserSuccess() {
         dao.delete(dao.getById(2));
         assertNull(dao.getById(2));
     }

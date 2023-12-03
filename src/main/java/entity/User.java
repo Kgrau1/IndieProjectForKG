@@ -11,20 +11,22 @@ import java.util.*;
  * The type User.
  */
 @Entity(name = "User")
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
+    @Column(name = "userId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     private LocalDateTime currentTime;
-
     private boolean isClockedIn;
-    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Hours> loggedHours;
 
     /**
@@ -32,6 +34,13 @@ public class User {
      */
     public User() {
         loggedHours = new ArrayList<>();
+    }
+
+    public User(int userId, String firstName, String lastName, boolean isClockedIn) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isClockedIn = isClockedIn;
     }
 
     /**
@@ -59,6 +68,24 @@ public class User {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     */
+    public int getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets user id.
+     *
+     * @param userId the user id
+     */
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     /**
@@ -151,14 +178,41 @@ public class User {
         this.currentTime = currentTime;
     }
 
+    public void addLoggedHours(Hours hours) {
+        loggedHours.add(hours);
+        hours.setUser(this);
+    }
+
+    public void removeLoggedHours(Hours hours) {
+        loggedHours.remove(hours);
+        hours.setUser(null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                isClockedIn == user.isClockedIn &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, isClockedIn);
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", isClockedIn=" + isClockedIn +
-                ", loggedHours=" + loggedHours +
+                ", loggedHours=" + loggedHours.size() +
                 '}';
     }
 }

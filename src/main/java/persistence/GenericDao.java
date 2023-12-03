@@ -20,6 +20,11 @@ public class GenericDao<T> {
     private Class<T> type;
     private final Logger logger = LogManager.getLogger(this.getClass());
 
+    /**
+     * Instantiates a new Generic dao.
+     *
+     * @param type the type
+     */
     public GenericDao(Class<T> type) {
         this.type = type;
     }
@@ -28,6 +33,11 @@ public class GenericDao<T> {
 
     }
 
+    /**
+     * Returns an open session from the SessionFactory.
+     *
+     * @return the session
+     */
     public Session getSession() {
         return SessionFactoryProvider.getSessionFactory().openSession();
     }
@@ -52,13 +62,26 @@ public class GenericDao<T> {
     }
 
     /**
+     * Gets by job id.
+     *
+     * @param <T> the type parameter
+     * @param id  the id
+     * @return the by job id
+     */
+    public <T>T getByJobId(String id) {
+        Session session = getSession();
+        T entity = (T)session.get(type, id);
+        session.close();
+        return entity;
+    }
+
+    /**
      * Clock in.
      *
      * @param hours the hours
      */
     public void clockIn(Hours hours) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        hours.setClockInTime(currentTime);
+        hours.setClockInTime(LocalDateTime.now());
     }
 
     /**
@@ -67,8 +90,7 @@ public class GenericDao<T> {
      * @param hours the hours
      */
     public void clockOut(Hours hours) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        hours.setClockOutTime(currentTime);
+        hours.setClockOutTime(LocalDateTime.now());
     }
 
     /**
@@ -83,6 +105,23 @@ public class GenericDao<T> {
         transaction.commit();
         session.close();
     }
+
+    /**
+     * Insert int.
+     *
+     * @param entity the new User
+     * @return the int
+     */
+    public int insert(T entity) {
+        int id = 0;
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        id = (int)session.save(entity);
+        transaction.commit();
+        session.close();
+        return id;
+    }
+
     /**
      * Delete the entity.
      * @param entity the entity to be deleted
@@ -94,6 +133,8 @@ public class GenericDao<T> {
         transaction.commit();
         session.close();
     }
+
+
 
     /**
      * Gets all entities.
@@ -109,4 +150,5 @@ public class GenericDao<T> {
         session.close();
         return list;
     }
+
 }

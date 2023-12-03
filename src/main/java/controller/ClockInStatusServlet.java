@@ -8,8 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
 @WebServlet(
-        name = "",
-        urlPatterns = { "/" }
+        name = "ClockInStatusServlet",
+        urlPatterns = { "/ClockInStatusServlet" }
 )
 public class ClockInStatusServlet extends HttpServlet {
 
@@ -18,7 +18,17 @@ public class ClockInStatusServlet extends HttpServlet {
         int userId = Integer.parseInt(request.getParameter("userId"));
 
         GenericDao<User> dao = new GenericDao<>(User.class);
-        boolean isClockedIn = dao.getClockedInStatus(userId);
+        boolean isClockedIn = dao.getClockedInStatus(Integer.parseInt(String.valueOf(userId)));
+
+        if (!isClockedIn) {
+            User user = dao.getById(Integer.parseInt(String.valueOf(userId)));
+            if (user == null) {
+                request.setAttribute("userNotFound", true);
+                RequestDispatcher errorDispatcher = request.getRequestDispatcher("index.jsp");
+                errorDispatcher.forward(request, response);
+                return;
+            }
+        }
 
         request.setAttribute("isClockedIn", isClockedIn);
         request.setAttribute("userId", userId);

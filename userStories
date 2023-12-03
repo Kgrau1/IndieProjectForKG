@@ -1,0 +1,11 @@
+User Stories:
+1. As an administrator, I want to be able to add new employees to the system.
+2. As an administrator, I want to be able to edit employee details.
+3. As an administrator, I want to be able to deactivate or reactivate employees as needed.
+4. As an employee, I want to be able to clock in and clock out using the app.
+5. As an employee, I want to view my own clock-in and clock-out history.
+6. As an employee, I want to be able to view my total hours worked for a specific date range.
+7. As an employee, I want to be able to change my current job.
+8. As an administrator, I want to be able to view the clock-in and clock-out history for all employees.
+9. As an administrator, I want to generate payroll reports based on the total hours worked.
+10. As an administrator, I want to generate total hours for a specific job.

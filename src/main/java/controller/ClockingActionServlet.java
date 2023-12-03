@@ -10,32 +10,36 @@ import javax.servlet.http.*;
 import java.io.*;
 
 @WebServlet(
-        name = "",
-        urlPatterns = { "/" }
+        name = "ClockingActionServlet",
+        urlPatterns = { "/ClockingActionServlet" }
 )
-public class ClockingActionServlet {
+public class ClockingActionServlet extends HttpServlet{
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String userId = request.getParameter("userId");
+        int userId = Integer.parseInt(request.getParameter("userId"));
         String jobId = request.getParameter("jobId");
         String action = request.getParameter("action");
-        GenericDao<User> dao = new GenericDao<>(User.class);
-        User user = dao.getById(Integer.parseInt(userId));
+        GenericDao<User> userDao = new GenericDao<>(User.class);
+        User user = userDao.getById(userId);
+        GenericDao<Hours> hoursDao = new GenericDao<>(Hours.class);
         Hours hours = new Hours();
 
         if ("Clock In".equals(action)) {
             user.setClockedIn(true);
-            dao.clockIn(hours);
+            hours.setJobId(jobId);
+            hours.setUser(user);
+            userDao.clockIn(hours);
             user.getLoggedHours().add(hours);
+            //////////////////////////////////
         } else if ("Clock out".equals(action)) {
             user.setClockedIn(false);
-            dao.clockOut(hours);
+            userDao.clockOut(hours);
             user.getLoggedHours().add(hours);
-            dao.saveOrUpdate(user);
+            userDao.saveOrUpdate(user);
         } else if ("Change job".equals(action)) {
+            hours.setJobId(jobId);
             user.setClockedIn(false);
-
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
