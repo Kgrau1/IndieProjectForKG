@@ -1,0 +1,16 @@
+Screen Design:
+1. Login Screen:
+   - Fields: Username, Password, Login button.
+
+2. Dashboard:
+   - Display clock-in/out status for the current user.
+   - Option to clock in/out/change job.
+
+3. Employee Management:
+   - List of employees with options to add, edit, deactivate/reactivate.
+
+4. Clock-In/Out History:
+   - Display a table with date, clock-in time, clock-out time, job.
+
+5. Reports:
+   - Options to select date range and generate payroll reports.
